@@ -1,5 +1,15 @@
 -- This file can be loaded by calling `lua require('plugins')` from your init.vim
 
+-- Automatically install packer.nvim if it's not installed
+local install_path = vim.fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
+if not vim.loop.fs_stat(install_path) then
+  vim.fn.system({
+    'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim',
+    install_path,
+  })
+  vim.cmd('packadd packer.nvim')
+end
+
 -- Only required if you have packer configured as `opt`
 vim.cmd [[packadd packer.nvim]]
 
@@ -21,6 +31,7 @@ return require('packer').startup(function(use)
 	  end
   })
 
+  use("christoomey/vim-tmux-navigator")
   use({"nvim-treesitter/nvim-treesitter", run = ":TSUpdate"})
   use("nvim-treesitter/playground")
   use("theprimeagen/harpoon")
