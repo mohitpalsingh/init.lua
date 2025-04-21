@@ -39,28 +39,47 @@ autocmd('BufEnter', {
     group = MohitGroup,
     callback = function()
         if vim.bo.filetype == "zig" then
-            vim.cmd.colorscheme("tokyonight-night")
+            vim.cmd.colorscheme("gruvbox")
         else
-            vim.cmd.colorscheme("rose-pine-moon")
+            vim.cmd.colorscheme("gruvbox")
         end
     end
 })
 
+local lsp_keymaps_group = vim.api.nvim_create_augroup('MohitLSPKeymaps', { clear = true })
 
-autocmd('LspAttach', {
-    group = MohitGroup,
-    callback = function(e)
-        local opts = { buffer = e.buf }
-        vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end, opts)
-        vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end, opts)
-        vim.keymap.set("n", "<leader>vws", function() vim.lsp.buf.workspace_symbol() end, opts)
-        vim.keymap.set("n", "<leader>vd", function() vim.diagnostic.open_float() end, opts)
-        vim.keymap.set("n", "<leader>vca", function() vim.lsp.buf.code_action() end, opts)
-        vim.keymap.set("n", "<leader>vrr", function() vim.lsp.buf.references() end, opts)
-        vim.keymap.set("n", "<leader>vrn", function() vim.lsp.buf.rename() end, opts)
-        vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
-        vim.keymap.set("n", "[d", function() vim.diagnostic.goto_next() end, opts)
-        vim.keymap.set("n", "]d", function() vim.diagnostic.goto_prev() end, opts)
+vim.api.nvim_create_autocmd('LspAttach', {
+    group = lsp_keymaps_group,
+    callback = function(event)
+        -- Buffer-local options
+        local opts = { buffer = event.buf }
+
+        -- Navigation
+        vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts) -- Go to definition
+        vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts) -- Go to declaration
+        vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts) -- Show references
+        vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts) -- Go to implementation
+
+        -- Documentation
+        vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts) -- Hover documentation
+        vim.keymap.set('i', '<C-k>', vim.lsp.buf.signature_help, opts) -- Signature help (insert mode)
+
+        -- Workspace & Diagnostics
+        vim.keymap.set('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, opts) -- Add workspace folder
+        vim.keymap.set('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, opts) -- Remove workspace folder
+        vim.keymap.set('n', '<leader>wl', function() print(vim.inspect(vim.lsp.buf.list_workspace_folders())) end, opts) -- List workspace folders
+
+        -- Code Actions
+        vim.keymap.set({ 'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action, opts) -- Code actions (normal/visual mode)
+
+        -- Diagnostics
+        vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts) -- Previous diagnostic
+        vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts) -- Next diagnostic
+        vim.keymap.set('n', '<leader>d', vim.diagnostic.open_float, opts) -- Show diagnostic
+
+        -- Advanced
+        vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts) -- Rename symbol
+        vim.keymap.set('n', '<leader>f', function() vim.lsp.buf.format { async = true } end, opts) -- Format buffer
     end
 })
 
