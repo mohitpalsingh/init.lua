@@ -60,3 +60,62 @@ vim.keymap.set("n", "<leader>mr", "<cmd>CellularAutomaton make_it_rain<CR>");
 vim.keymap.set("n", "<leader><leader>", function()
     vim.cmd("so")
 end)
+
+-- =============================================================================
+-- Competitive Programming C++ Workflow
+-- =============================================================================
+-- C++ compiler and flags
+local cpp_compiler = "g++-15"
+local cpp_compile_flags = "-std=c++17 -Wshadow -Wall -O2"
+
+-- A helper function that handles the entire compile and run process silently.
+local function compile_and_run(is_interactive)
+    vim.cmd("write")
+    vim.cmd("clear")
+
+    -- Build the compile command
+    local file = vim.fn.shellescape(vim.fn.expand("%"))
+    local executable = vim.fn.shellescape(vim.fn.expand("%<"))
+    local compile_command = cpp_compiler .. " " .. cpp_compile_flags .. " " .. file .. " -o " .. executable
+
+    -- 1. Run compilation and capture any output.
+    local compile_output = vim.fn.system(compile_command)
+
+    -- 2. Check if compilation failed.
+    if vim.v.shell_error ~= 0 then
+        print("Error.")
+        -- Display the captured compiler error.
+        vim.api.nvim_echo({ {compile_output, "ErrorMsg"} }, true, {})
+        return
+    end
+
+    -- 3. Build the execution command (no 'time' command needed).
+    local run_command
+    if is_interactive then
+        run_command = executable
+    else
+        run_command = executable .. " < input.txt > output.txt"
+    end
+
+    -- 4. Run the program and capture any output (for runtime errors).
+    local run_output = vim.fn.system(run_command)
+
+    -- 5. Check for runtime errors.
+    if vim.v.shell_error ~= 0 then
+        print("Error.")
+        vim.api.nvim_echo({ {run_output, "ErrorMsg"} }, true, {})
+        return
+    end
+
+    -- 6. If all commands succeeded, print "Done."
+    print("Done.")
+end
+
+-- F6: Compile & Run with file I/O
+vim.keymap.set("n", "<F6>", function() compile_and_run(false) end, { desc = "Compile & Run with file I/O" })
+
+-- F7: Compile & Run interactively
+vim.keymap.set("n", "<F7>", function() compile_and_run(true) end, { desc = "Compile & Run interactively" })
+
+-- F8: Quickly open the output file in a vertical split
+vim.keymap.set("n", "<F8>", "<cmd>vsplit output.txt<CR>", { desc = "View output.txt" })
