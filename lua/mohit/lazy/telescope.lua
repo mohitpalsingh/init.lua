@@ -1,7 +1,7 @@
 return {
     "nvim-telescope/telescope.nvim",
 
-    tag = "0.1.5",
+    tag = "0.1.6",
 
     dependencies = {
         "nvim-lua/plenary.nvim"
@@ -21,9 +21,11 @@ return {
             local word = vim.fn.expand("<cWORD>")
             builtin.grep_string({ search = word })
         end)
-        vim.keymap.set('n', '<leader>ps', function()
-            builtin.grep_string({ search = vim.fn.input("Grep > ") })
-        end)
+        vim.keymap.set('n', '<leader>ps', builtin.live_grep, { desc = "Project Search (Live Grep)" })
         vim.keymap.set('n', '<leader>vh', builtin.help_tags, {})
+        vim.keymap.set('n', '<leader>pb', builtin.buffers, { desc = "Project Buffers" })
+        vim.keymap.set('n', '<leader>po', builtin.oldfiles, { desc = "Project Old Files" })
+        vim.keymap.set('n', '<leader>lr', builtin.lsp_references, { desc = "LSP Find References" })
+        vim.keymap.set('n', '<leader>fs', builtin.current_buffer_fuzzy_find, { desc = "Find String in Buffer" })
     end
 }

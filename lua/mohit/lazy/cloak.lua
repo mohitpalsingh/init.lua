@@ -1,6 +1,6 @@
 return {
     "laytan/cloak.nvim",
-    config = function() 
+    config = function()
         require("cloak").setup({
             enabled = true,
             cloak_character = "*",
@@ -13,7 +13,21 @@ return {
                     file_pattern = {
                         ".env*",
                         "wrangler.toml",
-                        ".dev.vars",
+                        "*.vars",
+                        "*.secret*",
+                        "*.secrets*",
+                        "secrets.*",
+                        "*.credentials*",
+                        "*.key*",
+                        "*.pem",
+                        "*.crt",
+                        "*.p12",
+                        "*.pfx",
+                        "*.cert",
+                        "*.config*",
+                        "config.*",
+                        "*.auth*",
+                        "*.token*",
                     },
                     -- Match an equals sign and any character after it.
                     -- This can also be a table of patterns to cloak,

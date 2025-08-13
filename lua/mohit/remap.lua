@@ -74,8 +74,8 @@ local function compile_and_run(is_interactive)
     vim.cmd("clear")
 
     -- Build the compile command
-    local file = vim.fn.shellescape(vim.fn.expand("%"))
-    local executable = vim.fn.shellescape(vim.fn.expand("%<"))
+    local file = vim.fn.expand("%:p")
+    local executable = vim.fn.expand("%:p:h") .. "/" .. vim.fn.expand("%:t:r")
     local compile_command = cpp_compiler .. " " .. cpp_compile_flags .. " " .. file .. " -o " .. executable
 
     -- 1. Run compilation and capture any output.

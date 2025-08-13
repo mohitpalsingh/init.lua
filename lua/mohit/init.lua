@@ -35,17 +35,6 @@ autocmd({"BufWritePre"}, {
     command = [[%s/\s\+$//e]],
 })
 
-autocmd('BufEnter', {
-    group = MohitGroup,
-    callback = function()
-        if vim.bo.filetype == "zig" then
-            vim.cmd.colorscheme("gruvbox")
-        else
-            vim.cmd.colorscheme("gruvbox")
-        end
-    end
-})
-
 local lsp_keymaps_group = vim.api.nvim_create_augroup('MohitLSPKeymaps', { clear = true })
 
 vim.api.nvim_create_autocmd('LspAttach', {

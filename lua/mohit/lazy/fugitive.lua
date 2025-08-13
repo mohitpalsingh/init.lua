@@ -34,5 +34,17 @@ return {
 
         vim.keymap.set("n", "gu", "<cmd>diffget //2<CR>")
         vim.keymap.set("n", "gh", "<cmd>diffget //3<CR>")
+
+        -- Additional Fugitive Commands
+        vim.keymap.set("n", "<leader>gb", ":Git blame<CR>")
+        vim.keymap.set("n", "<leader>gc", ":Git checkout<CR>")
+        vim.keymap.set("n", "<leader>gd", ":Gdiffsplit<CR>")
+        vim.keymap.set("n", "<leader>gl", ":Git log<CR>")
+        vim.keymap.set("n", "<leader>ga", ":Git add %<CR>")
+        vim.keymap.set("n", "<leader>gu", ":Git reset %<CR>")
+        vim.keymap.set("n", "<leader>gr", ":Git restore %<CR>")
+        vim.keymap.set("n", "<leader>gm", ":Git merge<CR>")
+        vim.keymap.set("n", "<leader>gC", ":Git commit<CR>")
+        vim.keymap.set("n", "<leader>gx", ":Git checkout -- %<CR>")
     end
 }
