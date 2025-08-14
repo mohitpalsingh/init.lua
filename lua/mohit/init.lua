@@ -12,12 +12,7 @@ function R(name)
     require("plenary.reload").reload_module(name)
 end
 
-vim.filetype.add({
-    extension = {
-        templ = 'templ',
-    }
-})
-
+-- to flash yanked text
 autocmd('TextYankPost', {
     group = yank_group,
     pattern = '*',
@@ -29,6 +24,7 @@ autocmd('TextYankPost', {
     end,
 })
 
+-- to remove trailing whitespace on save
 autocmd({"BufWritePre"}, {
     group = MohitGroup,
     pattern = "*",
@@ -37,6 +33,8 @@ autocmd({"BufWritePre"}, {
 
 local lsp_keymaps_group = vim.api.nvim_create_augroup('MohitLSPKeymaps', { clear = true })
 
+-- LSP keymaps
+-- This will set up buffer-local keymaps when an LSP server attaches to a buffer
 vim.api.nvim_create_autocmd('LspAttach', {
     group = lsp_keymaps_group,
     callback = function(event)
@@ -72,6 +70,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
     end
 })
 
+-- Netrw settings
 vim.g.netrw_browse_split = 0
 vim.g.netrw_banner = 0
 vim.g.netrw_winsize = 25
