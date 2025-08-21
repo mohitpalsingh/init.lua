@@ -22,7 +22,14 @@ return {
             vim.lsp.protocol.make_client_capabilities(),
             cmp_lsp.default_capabilities())
 
-        require("fidget").setup({})
+        require("fidget").setup({
+            notification = {
+                window = {
+                    winblend = 0,
+                    border = "rounded",
+                },
+            },
+        })
         require("mason").setup()
         require("mason-lspconfig").setup({
             ensure_installed = {
