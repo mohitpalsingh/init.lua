@@ -15,6 +15,7 @@
   "friendly-snippets": { "branch": "main", "commit": "572f5660cf05f8cd8834e096d7b4c921ba18e175" },
   "fzf-lua": { "branch": "main", "commit": "5d2ba91230356dce4dac52df32ddc6cf5a940d56" },
   "gruvbox": { "branch": "main", "commit": "12c2624287dc827edb5d72b2bc4c9619e692a554" },
+  "hererocks": { "branch": "master", "commit": "d2e2b7ab1ce5b6d4e517619746a810159f0e18db" },
   "img-clip.nvim": { "branch": "main", "commit": "d8b6b030672f9f551a0e3526347699985a779d93" },
   "lazy.nvim": { "branch": "main", "commit": "6c3bda4aca61a13a9c63f1c1d1b16b9d3be90d7a" },
   "lualine.nvim": { "branch": "master", "commit": "b8c23159c0161f4b89196f74ee3a6d02cdc3a955" },
