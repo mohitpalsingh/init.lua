@@ -28,4 +28,10 @@ vim.opt.isfname:append("@-@")
 
 vim.opt.updatetime = 50
 
-vim.opt.colorcolumn = "80"
+local function update_colorcolumn()
+    vim.opt_local.colorcolumn = tostring(math.floor(vim.fn.winwidth(0) * 0.8))
+end
+
+vim.api.nvim_create_autocmd({ "VimResized", "WinEnter", "BufEnter" }, {
+    callback = update_colorcolumn,
+})

@@ -40,8 +40,7 @@ vim.keymap.set("n", "Q", "<nop>")
 -- Create a mew Tmux window with the current file
 vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
 
--- Format the current buffer using LSP
-vim.keymap.set("n", "<leader>f", vim.lsp.buf.format)
+-- Format the current buffer using LSP (handled in init.lua LspAttach autocmd)
 
 -- Quick List commands
 vim.keymap.set("n", "<leader>q", "<cmd>copen<CR>")
@@ -71,6 +70,17 @@ vim.keymap.set("n", "-", "<cmd>Oil<CR>")
 vim.keymap.set("n", "<leader><leader>", function()
     vim.cmd("so")
 end)
+
+-- Open Claude Code in a tmux split to the right
+vim.keymap.set("n", "<leader>cc", function()
+    vim.cmd("silent !tmux split-window -h -l 80 'claude'")
+end, { desc = "Open Claude Code in tmux split" })
+
+-- Open Claude Code with current file context
+vim.keymap.set("n", "<leader>cC", function()
+    local file = vim.fn.expand("%:p")
+    vim.cmd("silent !tmux split-window -h -l 80 'claude \"Review and help with " .. file .. "\"'")
+end, { desc = "Open Claude Code with current file" })
 
 -- =============================================================================
 -- Competitive Programming C++ Workflow

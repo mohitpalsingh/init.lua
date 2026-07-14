@@ -36,9 +36,9 @@ return {
                 "lua_ls",      -- For Lua
                 "clangd",      -- For C++
                 "jdtls",       -- For Java
-                "metals",      -- For Scala
-                "tsserver",    -- For JavaScript and TypeScript
                 "pyright",     -- For Python
+                "gopls",       -- For Go
+                "kotlin_language_server", -- For Kotlin
             },
             handlers = {
                 function(server_name) -- default handler (optional)
@@ -59,6 +59,47 @@ return {
                                     library = vim.api.nvim_get_runtime_file("", true),
                                 },
                             },
+                        },
+                    }
+                end,
+
+                ["gopls"] = function()
+                    require("lspconfig").gopls.setup {
+                        capabilities = capabilities,
+                        settings = {
+                            gopls = {
+                                analyses = {
+                                    unusedparams = true,
+                                    shadow = true,
+                                    nilness = true,
+                                    unusedwrite = true,
+                                    useany = true,
+                                },
+                                staticcheck = true,
+                                gofumpt = true,
+                                completeUnimported = true,
+                                usePlaceholders = true,
+                            },
+                        },
+                    }
+                end,
+
+                ["clangd"] = function()
+                    require("lspconfig").clangd.setup {
+                        capabilities = capabilities,
+                        cmd = {
+                            "clangd",
+                            "--background-index",
+                            "--clang-tidy",
+                            "--header-insertion=never",
+                            "--completion-style=detailed",
+                            "--function-arg-placeholders",
+                        },
+                        init_options = {
+                            clangdFileStatus = true,
+                            usePlaceholders = true,
+                            completeUnimported = true,
+                            semanticHighlighting = true,
                         },
                     }
                 end,
