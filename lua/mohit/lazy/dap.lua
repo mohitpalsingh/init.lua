@@ -25,6 +25,21 @@ return {
         end,
     },
 
+    -- DAP-Python Integration (debugpy from project .venv)
+    {
+        'mfussenegger/nvim-dap-python',
+        dependencies = { 'mfussenegger/nvim-dap' },
+        config = function()
+            local venv = vim.fn.getcwd() .. '/.venv/bin/python'
+            if vim.fn.executable(venv) == 1 then
+                require('dap-python').setup(venv)
+            else
+                require('dap-python').setup('python3')
+            end
+            vim.keymap.set('n', '<leader>dpt', function() require('dap-python').test_method() end)
+        end,
+    },
+
     -- DAP-UI
     {
         'rcarriga/nvim-dap-ui',
