@@ -143,8 +143,7 @@ vim.keymap.set("n", "<F8>", "<cmd>vsplit output.txt<CR>", { desc = "View output.
 
 -- Disable Copilot for all files in a specific directory
 vim.api.nvim_create_autocmd('BufEnter', {
-  -- Use the absolute path to your directory. The * at the end is a wildcard for any file inside.
-  pattern = '/Users/mohits/Documents/personal/cp/*',
+  pattern = vim.fn.expand('~') .. '/Documents/personal/cp/*',
   callback = function()
     vim.b.copilot_enabled = false
   end,
