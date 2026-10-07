@@ -1,0 +1,14 @@
+lazy-lock.json
+  h_974c9a1bf4154e 22
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.22",
+  "base_commit_sha": "ed2b472e445c250fe14a3b7def987f9b84ae2397",
+  "prompts": {},
+  "humans": {
+    "h_974c9a1bf4154e": {
+      "author": "Mohit Pal Singh <mohit.pal.singh@outlook.com>"
+    }
+  }
+}
